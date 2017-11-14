@@ -20,7 +20,8 @@ namespace Prac8
         //SQLiteConnection Database;
         public static MobileServiceClient cliente;
         public static IMobileServiceTable<_13090337> tabla;
-        //        MobileServiceUser usuario;
+        public static MobileServiceUser usuario;
+       
         public DataPage()
         {
             InitializeComponent();
@@ -32,7 +33,9 @@ namespace Prac8
             //BindingContext = this;
             cliente = new MobileServiceClient(AzureConnection.AzureURL);
             tabla = cliente.GetTable<_13090337>();
-            Leertabla();
+            if (usuario != null) { Leertabla(); };
+            //Leertabla();
+           
         }
         private void Evento_Insertar(object sender, EventArgs e)
         {
@@ -49,14 +52,45 @@ namespace Prac8
             IEnumerable<_13090337> elementos = await tabla.ToEnumerableAsync();
             Items = new ObservableCollection<_13090337>(elementos);
             BindingContext = this;
+            lista.ItemsSource = Items;
+           
 
         }
-        private async void Evento_Eliminados(object sender, EventArgs e)
+
+
+        private void Evento_Eliminados(object sender, EventArgs e) 
+
+            {
+            Navigation.PushAsync(new DeletPage());
+        }
+
+    private async void Button_Clicked(object sender, EventArgs e)
         {
-            IEnumerable<_13090337> elementos = await tabla.IncludeDeleted().ToEnumerableAsync();
-            Items = new ObservableCollection<_13090337>(elementos);
-            BindingContext = this;
-
+            usuario = await App.Authenticador.Autheticate();
+            if (App.Authenticador != null)
+            {
+                if (usuario != null)
+                {
+                    await DisplayAlert("Usuario Autenticado", usuario.UserId, "OK");
+                    Leertabla();
+                }
+                if (usuario == null)
+                {
+                    Boton_Insertar.IsVisible = false;
+                    Boton_Insertar.IsEnabled = false;
+                    Boton_Eliminados.IsVisible = false;
+                    Boton_Eliminados.IsEnabled = false;
+                }
+            }
         }
+            protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (usuario != null)
+            {
+                Leertabla();
+            }
+        }
+
     }
-}
+    }

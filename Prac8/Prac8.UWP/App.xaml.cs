@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -102,6 +103,16 @@ namespace Prac8.UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                var protocolArgs = args as ProtocolActivatedEventArgs;
+                Prac8.DataPage.cliente.ResumeWithURL(protocolArgs.Uri);
+            }
         }
     }
 }

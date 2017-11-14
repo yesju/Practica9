@@ -8,6 +8,6 @@ namespace Prac8
 {
   public  class AzureConnection
     {
-        public static string AzureURL = "http://tesh.azurewebsites.net";
+        public static string AzureURL = "https://tesh.azurewebsites.net";
     }
 }

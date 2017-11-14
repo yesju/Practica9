@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Prac8;
 using Xamarin.Forms;
 
 namespace Prac8
 {
     public partial class App : Application
     {
+        public static ISQLAzure Authenticador { get; private set; }
+        public static void Init(ISQLAzure authenticator)
+        {
+            Authenticador = authenticator;
+        }
+
         public App()
         {
             InitializeComponent();
@@ -16,10 +22,11 @@ namespace Prac8
             MainPage = new NavigationPage(new DataPage());
         }
 
-        protected override void OnStart()
+        protected override void OnStart()// poner el evento de autencyicacion
         {
-            // Handle when your app starts
-        }
+
+
+        } 
 
         protected override void OnSleep()
         {
@@ -30,5 +37,7 @@ namespace Prac8
         {
             // Handle when your app resumes
         }
+
+        
     }
 }

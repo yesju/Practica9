@@ -19,9 +19,7 @@ namespace Prac8
             // string db;
             // db = DependencyService.Get<ISQLite>().GetLocalFilePath("Practica.db");
             // database = new SQLiteConnection(db);
-            string[] uno = { "Primero", "Segundo","Tercero","Cuarto","Quinto",
-            "Sexto","Octavo","Noveno"};
-            Picker_semestre.ItemsSource = uno;
+            
         }
         private async void Button_Insertar_Clicked(object sender, EventArgs e)
         {
@@ -33,13 +31,14 @@ namespace Prac8
                 Direccion = Entry_Direccion.Text,
                 Telefono = Convert.ToInt32(Entry_Telefono.Text),
                 Carrera = Entry_Carrera.Text,
-                Semestre = Convert.ToString(Picker_semestre.SelectedItem),
+                Semestre = Entry_Semestre.Text,
                 Correo = Entry_Correo.Text,
                 GitHub = Entry_GitHub.Text
             };
             //database.Insert(datos);
             await DataPage.tabla.InsertAsync(datos);
-            await Navigation.PushAsync(new DataPage());
+            //await Navigation.PushAsync(new DataPage());
+           await Navigation.PopAsync();
         }
     }
 }

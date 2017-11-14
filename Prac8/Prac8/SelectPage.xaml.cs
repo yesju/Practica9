@@ -19,15 +19,14 @@ namespace Prac8
             var dato = selectedItem as _13090337;
             BindingContext = dato;
             InitializeComponent();
+
             // var dato = selectedItem as TESHDatos;
             // BindingContext = dato;
 
             // string db;
             // db = DependencyService.Get<ISQLite>().GetLocalFilePath("Practica.db");
             // database = new SQLiteConnection(db);
-            string[] uno = { "Primero", "Segundo","Tercero","Cuarto","Quinto",
-            "Sexto","Octavo","Noveno"};
-            Picker_semestre.ItemsSource = uno;
+          
         }
         private async void Button_Actualizar_Clicked(object sender, EventArgs e)
         {
@@ -39,14 +38,15 @@ namespace Prac8
                 Direccion = Entry_Direccion.Text,
                 Telefono = Convert.ToInt32(Entry_Telefono.Text),
                 Carrera = Entry_Carrera.Text,
-                Semestre = Convert.ToString(Picker_semestre.SelectedItem),
+                Semestre = Entry_Semestre.Text,
                 Correo = Entry_Correo.Text,
                 GitHub = Entry_GitHub.Text
             };
             //database.Update(datos);
             //Navigation.PushAsync(new DataPage());
             await DataPage.tabla.UpdateAsync(datos);
-            await Navigation.PushAsync(new DataPage());
+            //await Navigation.PushAsync(new DataPage());
+            await Navigation.PopAsync();
         }
         private async void Button_Eliminar_Clicked(object sender, EventArgs e)
         {
@@ -54,12 +54,11 @@ namespace Prac8
             {
                 ID = Entry_ID.Text,
 
-
             };
-            //database.Delete(datos);
-            //Navigation.PushAsync(new DataPage());
+           
             await DataPage.tabla.DeleteAsync(datos);
-            await Navigation.PushAsync(new DataPage());
+
+            await Navigation.PopAsync();
         }
     }
 }
